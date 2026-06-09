@@ -1,0 +1,24 @@
+services:
+  - type: web
+    name: nexus-backend
+    env: node
+    buildCommand: npm install
+    startCommand: npm run server
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 4000
+      - key: DATABASE_URL
+        fromDatabase:
+          name: nexus-db
+          property: connectionString
+      - key: JWT_SECRET
+        generateValue: true
+      - key: STRIPE_SECRET_KEY
+        sync: false
+
+databases:
+  - name: nexus-db
+    databaseName: business_nexus
+    user: nexus_admin
